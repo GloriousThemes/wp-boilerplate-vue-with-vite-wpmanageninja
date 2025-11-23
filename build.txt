@@ -1,0 +1,65 @@
+Every time we create a new WordPress plugin we have to set up all the things repeatedly. Which is really time-consuming and an extra burden for us. There are some common things every WordPress plugin has. So if we can make those listed and make it reusable for the future that saves a lot of time for us. Also, we don’t have to plan or think about plugin architecture all the time for new ones. This is the WordPress boilerplate plugin which did that perfectly.
+Also, HMR(hot module replacement) will save time during development and compress package size on production.
+
+Let’s make a new plugin. Trust me it only need’s couple of seconds to make a WordPress plugin with a single-page application using Vue js and Vite.
+
+Dependencies:
+There is no extra dependency at all. Just need the basic things to run a single-page JS application. Check that Node and Npm are installed globally on your device. You may check the installation status of the node by node v and npm -v for Npm.
+
+How to create? Quick setup:
+Github Repo Link
+Step 1. Just clone this repository into your WordPress plugin directory (wp-content/plugins)
+Step 2. Open in the terminal and install npm using the command npm i
+Step 3. Call the Aladin 🧞 by command node aladin and it will prompt your Plugin Name. Just Write the name and hit enter.
+
+Step 4. To run the dev environment run `npm run dev`
+
+
+All done!
+
+Use the plugin
+Everything is done. Check the Plugin repository to find your chosen name and activate your plugin.
+
+Check that all of your ClassNames and slugs are updated with your new plugin info.
+
+Plugin Architecture
+You may check the package.json directory to get the dependency of your application. Keep those you want or feel free to remove them. The /src directory holds all the JavaScript and Vue js codes. You can check the Vue sources code there.
+
+It has a prebuilt tailwind setup, Use it or remove it easily by deleting it from package.json, tailwind.config.js and CSS from the src/element.js.
+
+You may use the popular UI plugin element-plus as well.
+
+
+Here the directory includes contains all the PHP files you need in your plugin. You may update or modify the structure as per your needs.
+
+plugin-entry file is the main plugin file, which loads all the classes.
+
+/src directory contains all the vue and js files.
+NB: You may not be concerned about other files/directories. They are just development dependencies. You don’t need that for production build as well.
+
+Development Helper Class
+There is an HMR setup in Vite. So you don’t have to reload all the pages when the development server is running. It will automatically load and update on DOM. However, the assets only build on production and the development assets server after the local port. So we have to change the asset’s URL when we enqueue the assets like scripts or styles.
+
+To make that easy and more efficient it has a Vite class. we don’t need to call wp_enqueue_script or wp_enqueue_style.
+
+Just use Vite::enqueueScript to load scripts and Vite::enqueueStyle for styles. All the parameters are the same as the WordPress enqueue script and enqueue style methods.
+
+Example:
+Vite::enqueueScript($enqueueTag, $yourAdminSourcePath, $dependency = [], $version = null, $inFooter = false);
+
+Vite::enqueueScript('my-plugin-script-boot', 'admin/start.js', array('jquery'), PLUGIN_CONST_VERSION, true);
+
+NB: Here $yourAdminSourcePath will be the src directory path.
+
+Port Declaration:
+You may use different ports for your site project. The default port is set to 8880. To update the port change the port declaration on includes/classes/Vite and vite.config.js file.
+
+
+Production Build
+You only need to run npm run production delete all except these files/directories.
+
+assets
+includes
+plugin-entry.php (plugin Entry file
+Language
+Make them zip and upload them on any WordPress plugin directory.
